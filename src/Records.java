@@ -24,6 +24,7 @@ public class Records extends BankRecords {
         br.process_data();
         AvgComp();
         females_savings_account();
+        male_car_child();
         try {
             fw.close();
         } catch (Exception e) {
@@ -70,21 +71,44 @@ public class Records extends BankRecords {
         for (int person = 0; person < records.length; person += 1) {
             if (records[person].get_sex().equals("FEMALE") && records[person].get_save_act().equals("YES")
                     && records[person].get_mortgage().equals("YES")) {
-                        
+
                 num_of_females += 1;
             }
         }
         System.out.printf("Number of females with a mortgage, savings account are: %d\n", num_of_females);
-        try{
-            fw.write("Number of females with a mortgage, savings account are: " + num_of_females);
-        }
-        catch (FileNotFoundException ex){
+        try {
+            fw.write("Number of females with a mortgage, savings account are: " + num_of_females + '\n');
+        } catch (FileNotFoundException ex) {
             System.out.println("File could not be found. Check Typos");
+        } catch (IOException ex) {
+            System.out.println("IO Error");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private static void male_car_child() {
+        Arrays.sort(records, new CarComparator());
+        Arrays.sort(records, new ChildComparator());
+        Arrays.sort(records, new SexComparator());
+        int male_count = 0;
+        for (int person = 0; person < records.length; person += 1) {
+            if (records[person].get_sex().equals("MALE") && records[person].get_Car().equals("YES")
+                    && records[person].get_children() == 1) {
+                male_count += 1;
+            }
+        }
+        System.out.printf("Number of males with a car and 1 child only: %d\n", male_count);
+        try {
+            fw.write("Number of males with a car and 1 child only: " + male_count + '\n');
+        } 
+        catch (FileNotFoundException ex){
+            System.out.println("File not found. Check Typos");
         }
         catch (IOException ex){
             System.out.println("IO Error");
         }
-        catch (Exception ex){
+        catch (Exception ex) {
             ex.printStackTrace();
         }
     }
