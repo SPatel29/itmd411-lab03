@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BankRecords extends Client{
-    private BankRecords[] records = new BankRecords[600];   //holds 600 BankRecords objects
-    private ArrayList<String> lst = new ArrayList<>();
+    static BankRecords[] records = new BankRecords[600];   //holds 600 BankRecords objects
+    static ArrayList<String> lst = new ArrayList<>();
     private String id;
     private int age;
     private String sex;
