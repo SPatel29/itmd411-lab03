@@ -1,7 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.util.Arrays;
 
 public class Records extends BankRecords {
@@ -45,15 +44,15 @@ public class Records extends BankRecords {
                 male_total_income += records[person].get_income();
             }
         }
-        System.out.printf("Avg income for female employes rounded to two decimal points: $%.2f\n",
+        System.out.printf("\nAvg income for female employes rounded to two decimal points: $%.2f\n",
                 (female_total_income / female_count));
-        System.out.printf("Avg income for male employes rounded to two decimal points: $%.2f\n",
+        System.out.printf("\nAvg income for male employes rounded to two decimal points: $%.2f\n",
                 (male_total_income / male_count));
         try {
             fw.write("Avg income for female employes: $" +
-                    (female_total_income / female_count) + '\n');
+                    String.format("%.2f", female_total_income / female_count) + '\n');
             fw.write("Avg income for male employes: $" +
-                    (male_total_income / male_count) + '\n');
+                    String.format("%.2f", male_total_income / male_count) + '\n');
         } catch (FileNotFoundException ex) {
             System.out.println("File does not exisit");
         } catch (IOException ex) {
@@ -75,7 +74,7 @@ public class Records extends BankRecords {
                 num_of_females += 1;
             }
         }
-        System.out.printf("Number of females with a mortgage, savings account are: %d\n", num_of_females);
+        System.out.printf("\nNumber of females with a mortgage, savings account are: %d\n", num_of_females);
         try {
             fw.write("Number of females with a mortgage, savings account are: " + num_of_females + '\n');
         } catch (FileNotFoundException ex) {
@@ -90,25 +89,51 @@ public class Records extends BankRecords {
     private static void male_car_child() {
         Arrays.sort(records, new CarComparator());
         Arrays.sort(records, new ChildComparator());
+        Arrays.sort(records, new LocationComparator());
         Arrays.sort(records, new SexComparator());
-        int male_count = 0;
+        int male_count_inner_city = 0;
+        int male_count_town = 0;
+        int male_count_rural = 0;
+        int male_count_suburban = 0;
+
         for (int person = 0; person < records.length; person += 1) {
             if (records[person].get_sex().equals("MALE") && records[person].get_Car().equals("YES")
-                    && records[person].get_children() == 1) {
-                male_count += 1;
+                    && records[person].get_children() == 1 && records[person].get_region().equals("INNER_CITY")) {
+                male_count_inner_city += 1;
+            } else if (records[person].get_sex().equals("MALE") && records[person].get_Car().equals("YES")
+                    && records[person].get_children() == 1 && records[person].get_region().equals("TOWN")) {
+                male_count_town += 1;
+            } else if (records[person].get_sex().equals("MALE") && records[person].get_Car().equals("YES")
+                    && records[person].get_children() == 1 && records[person].get_region().equals("RURAL")) {
+                male_count_rural += 1;
+            } else if (records[person].get_sex().equals("MALE") && records[person].get_Car().equals("YES")
+                    && records[person].get_children() == 1 && records[person].get_region().equals("SUBURBAN")) {
+                male_count_suburban += 1;
             }
         }
-        System.out.printf("Number of males with a car and 1 child only: %d\n", male_count);
+        System.out.printf("\nNumber of males with a car and 1 child only in inner city region: %d\n",
+                male_count_inner_city);
+        System.out.printf("\nNumber of males with a car and 1 child only in town region: %d\n",
+                male_count_town);
+        System.out.printf("\nNumber of males with a car and 1 child only in rural region: %d\n",
+                male_count_rural);
+        System.out.printf("\nNumber of males with a car and 1 child only in suburban region: %d\n",
+                male_count_suburban);
+
         try {
-            fw.write("Number of males with a car and 1 child only: " + male_count + '\n');
-        } 
-        catch (FileNotFoundException ex){
+            fw.write(
+                    "Number of males with a car and 1 child only in inner city region: " + male_count_inner_city + '\n');
+            fw.write(
+                    "Number of males with a car and 1 child only in town region: " + male_count_town + '\n');
+            fw.write(
+                    "Number of males with a car and 1 child only in location region: " + male_count_rural + '\n');
+            fw.write(
+                    "Number of males with a car and 1 child only in suburban region: " + male_count_suburban + '\n');
+        } catch (FileNotFoundException ex) {
             System.out.println("File not found. Check Typos");
-        }
-        catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println("IO Error");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
