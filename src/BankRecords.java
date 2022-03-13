@@ -27,7 +27,7 @@ public class BankRecords extends Client{
     public String get_married() {return married;}
     public int get_children() {return children;}
     public String get_Car() {return car;}
-    public String save_act() {return save_act;}
+    public String get_save_act() {return save_act;}
     public String get_current_act() {return current_act;}
     public String get_mortgage() {return mortgage;}
     public String get_prep() {return prep;}

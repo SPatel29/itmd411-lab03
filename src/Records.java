@@ -23,6 +23,7 @@ public class Records extends BankRecords {
         br.read_data();
         br.process_data();
         AvgComp();
+        females_savings_account();
         try {
             fw.close();
         } catch (Exception e) {
@@ -57,6 +58,33 @@ public class Records extends BankRecords {
         } catch (IOException ex) {
             System.out.println("IO Error");
         } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private static void females_savings_account() {
+        int num_of_females = 0;
+        Arrays.sort(records, new MortgageComparator());
+        Arrays.sort(records, new SavingsAccountComparator());
+        Arrays.sort(records, new SexComparator());
+        for (int person = 0; person < records.length; person += 1) {
+            if (records[person].get_sex().equals("FEMALE") && records[person].get_save_act().equals("YES")
+                    && records[person].get_mortgage().equals("YES")) {
+                        
+                num_of_females += 1;
+            }
+        }
+        System.out.printf("Number of females with a mortgage, savings account are: %d\n", num_of_females);
+        try{
+            fw.write("Number of females with a mortgage, savings account are: " + num_of_females);
+        }
+        catch (FileNotFoundException ex){
+            System.out.println("File could not be found. Check Typos");
+        }
+        catch (IOException ex){
+            System.out.println("IO Error");
+        }
+        catch (Exception ex){
             ex.printStackTrace();
         }
     }
