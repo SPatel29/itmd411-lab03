@@ -89,7 +89,7 @@ public class Records extends BankRecords {
         }
         System.out.printf("\nNumber of females with a mortgage, savings account are: %d\n", num_of_females);
         try {
-            fw.write("Number of females with a mortgage, savings account are: " + num_of_females + '\n');
+            fw.write("\nNumber of females with a mortgage, savings account are: " + num_of_females + '\n');
         } catch (FileNotFoundException ex) {
             System.out.println("File could not be found. Check Typos");
         } catch (IOException ex) {
@@ -141,7 +141,7 @@ public class Records extends BankRecords {
 
         try {
             fw.write(
-                    "Number of males with a car and 1 child only in INNER CITY region: " + male_count_inner_city
+                    "\nNumber of males with a car and 1 child only in INNER CITY region: " + male_count_inner_city
                             + '\n');
             fw.write(
                     "Number of males with a car and 1 child only in TOWN region: " + male_count_town + '\n');
@@ -175,7 +175,7 @@ public class Records extends BankRecords {
         System.out.printf("\nAverage income for employees greater than or equal to the age 50 is: $%.2f\n",
                 (income / quantity));
         try {
-            fw.write("Average income for employees greater than or equal to the age 50 is: $"
+            fw.write("\nAverage income for employees greater than or equal to the age 50 is: $"
                     + String.format("%.2f", (income / quantity)) + '\n');
         } catch (FileNotFoundException ex) {
             System.out.println("File not found. Check Typos");
@@ -215,7 +215,7 @@ public class Records extends BankRecords {
         System.out.printf("\nNumber of employees in SUBURBAN region: %d\n", suburban_count);
 
         try {
-            fw.write("Number of employees in INNER CITY region: " + String.format("%d", inner_city_count) + '\n');
+            fw.write("\nNumber of employees in INNER CITY region: " + String.format("%d", inner_city_count) + '\n');
             fw.write("Number of employees in TOWN region: " + String.format("%d", town_count) + '\n');
             fw.write("Number of employees in RURAL region: " + String.format("%d", rural_count) + '\n');
             fw.write("Number of employees in SUBURBAN region: " + String.format("%d", suburban_count) + '\n');
